@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -69,6 +70,16 @@
         app:layout_constraintStart_toEndOf="@id/details_tv_released"
         app:layout_constraintTop_toBottomOf="@id/details_tv_title"
         tools:text="2018-01-01" />
+
+    <Button
+        android:id="@+id/details_btn_trailer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/details_iv_image"
+        app:layout_constraintTop_toBottomOf="@id/details_tv_released"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:text="Movie Trailer"/>
 
     <TextView
         android:id="@+id/details_tv_overview"
