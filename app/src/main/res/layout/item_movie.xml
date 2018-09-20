@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/item_movie_iv"
         android:layout_width="90dp"
-        android:layout_height="140dp"
+        android:layout_height="130dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/infinity_war_image" />
