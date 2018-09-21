@@ -31,7 +31,9 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
     }
 
     @Override
-    public void onMovieClicked(MovieModel movieModel) {
+    public void onMovieClicked(int itemPosition) {
+        if (itemPosition < 0 || itemPosition >= movies.size()) return;
+        MovieModel movieModel = movies.get(itemPosition);
         if (movieModel == null || TextUtils.isEmpty(movieModel.getName())) return;
         Toast.makeText(this, movieModel.getName(), Toast.LENGTH_SHORT).show();
     }

@@ -44,7 +44,6 @@ public class MoviesViewAdapter extends RecyclerView.Adapter<MoviesViewAdapter.Vi
         public final ImageView ivImage;
         public final TextView tvTitle;
         public final TextView tvOverview;
-        public MovieModel item;
 
         public ViewHolder(View view) {
             super(view);
@@ -55,7 +54,6 @@ public class MoviesViewAdapter extends RecyclerView.Adapter<MoviesViewAdapter.Vi
         }
 
         public void bind(MovieModel movieModel) {
-            item = movieModel;
             ivImage.setImageResource(movieModel.getImageRes());
             tvTitle.setText(movieModel.getName());
             tvOverview.setText(movieModel.getOverview());
@@ -64,7 +62,7 @@ public class MoviesViewAdapter extends RecyclerView.Adapter<MoviesViewAdapter.Vi
         @Override
         public void onClick(View view) {
             if (movieClickListener == null) return;
-            movieClickListener.onMovieClicked(item);
+            movieClickListener.onMovieClicked(getAdapterPosition());
         }
     }
 }

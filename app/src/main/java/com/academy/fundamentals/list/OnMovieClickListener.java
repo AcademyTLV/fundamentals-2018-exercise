@@ -7,5 +7,5 @@ import com.academy.fundamentals.model.MovieModel;
  */
 public interface OnMovieClickListener {
 
-    void onMovieClicked(MovieModel movieModel);
+    void onMovieClicked(int itemPosition);
 }
