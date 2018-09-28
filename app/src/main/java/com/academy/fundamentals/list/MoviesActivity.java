@@ -5,20 +5,29 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.academy.fundamentals.R;
+import com.academy.fundamentals.Threads.AsyncTaskActivity;
+import com.academy.fundamentals.Threads.ThreadsActivity;
 import com.academy.fundamentals.details.DetailsActivity;
 import com.academy.fundamentals.model.MovieModel;
 import com.academy.fundamentals.model.MoviesContent;
 
 public class MoviesActivity extends AppCompatActivity implements OnMovieClickListener {
 
+    private static final String TAG = "MoviesActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
         RecyclerView recyclerView = findViewById(R.id.movies_rv_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -26,6 +35,33 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
         loadMovies();
 
         recyclerView.setAdapter(new MoviesViewAdapter(MoviesContent.MOVIES, this));
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.movies_activity_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_open_async_task:
+                // Open Async Task Activity
+                startActivity(new Intent(MoviesActivity.this, AsyncTaskActivity.class));
+                return true;
+
+            case R.id.action_open_thread_handler:
+                // Open Thread Handler Activity
+                startActivity(new Intent(MoviesActivity.this, ThreadsActivity.class));
+                return true;
+
+            default:
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
