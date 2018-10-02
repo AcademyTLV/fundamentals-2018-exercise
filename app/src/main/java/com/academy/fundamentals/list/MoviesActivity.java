@@ -5,17 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.academy.fundamentals.R;
 import com.academy.fundamentals.details.DetailsActivity;
-import com.academy.fundamentals.model.MovieModel;
+import com.academy.fundamentals.model.MovieModelConverter;
 import com.academy.fundamentals.model.MoviesContent;
 import com.academy.fundamentals.rest.MovieListResult;
 import com.academy.fundamentals.rest.MoviesService;
-import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,20 +24,19 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
 
     private Retrofit retrofit;
     private MoviesService moviesService;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
-        RecyclerView recyclerView = findViewById(R.id.movies_rv_list);
+        recyclerView = findViewById(R.id.movies_rv_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         createNetworkService();
 
         loadMovies();
-
-        recyclerView.setAdapter(new MoviesViewAdapter(MoviesContent.MOVIES, this));
     }
 
     private void createNetworkService() {
@@ -67,8 +63,11 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
         moviesService.searchImage().enqueue(new Callback<MovieListResult>() {
             @Override
             public void onResponse(Call<MovieListResult> call, Response<MovieListResult> response) {
-
                 Log.i("response", "response");
+                if (response.code() == 200) {
+                    MoviesContent.MOVIES.addAll(MovieModelConverter.convertResult(response.body()));
+                    recyclerView.setAdapter(new MoviesViewAdapter(MoviesContent.MOVIES, MoviesActivity.this));
+                }
             }
 
             @Override

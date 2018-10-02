@@ -30,6 +30,15 @@ public class MovieModel implements Parcelable {
         trailerUrl = in.readString();
     }
 
+    public MovieModel(String name, int imageRes, int backImageRes, String overview, String releaseDate, String trailerUrl) {
+        this.name = name;
+        this.imageRes = imageRes;
+        this.backImageRes = backImageRes;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+        this.trailerUrl = trailerUrl;
+    }
+
     public String getName() {
         return name;
     }
