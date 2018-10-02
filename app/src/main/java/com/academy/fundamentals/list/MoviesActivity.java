@@ -13,6 +13,7 @@ import com.academy.fundamentals.R;
 import com.academy.fundamentals.details.DetailsActivity;
 import com.academy.fundamentals.model.MovieModel;
 import com.academy.fundamentals.model.MoviesContent;
+import com.academy.fundamentals.rest.MovieListResult;
 import com.academy.fundamentals.rest.MoviesService;
 import com.google.gson.JsonObject;
 
@@ -63,16 +64,15 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
     private void loadMovies() {
         MoviesContent.clear();
 
-        final Call<JsonObject> jsonObjectCall = moviesService.searchImage();
-        jsonObjectCall.enqueue(new Callback<JsonObject>() {
+        moviesService.searchImage().enqueue(new Callback<MovieListResult>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                jsonObjectCall.cancel();
+            public void onResponse(Call<MovieListResult> call, Response<MovieListResult> response) {
+
                 Log.i("response", "response");
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
+            public void onFailure(Call<MovieListResult> call, Throwable t) {
                 Log.i("failure", "failure");
 
             }

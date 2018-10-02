@@ -20,7 +20,7 @@ public interface MoviesService {
     String QUERY_PATH = POPULAR + keyQuery;
 
     @GET(QUERY_PATH)
-    Call<JsonObject> searchImage();
+    Call<MovieListResult> searchImage();
 }
 
 
