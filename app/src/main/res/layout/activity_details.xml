@@ -110,5 +110,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/details_tv_overview" />
 
-
 </android.support.constraint.ConstraintLayout>
