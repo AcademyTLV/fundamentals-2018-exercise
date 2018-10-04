@@ -1,11 +1,17 @@
 package com.academy.fundamentals.details;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RotateDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.academy.fundamentals.R;
 import com.academy.fundamentals.model.MovieModel;
@@ -46,6 +53,7 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     private MovieModel movieModel;
     private Picasso picasso;
     private MoviesService moviesService;
+    private Button btnTrailer;
 
     public MovieDetailsFragment() { }
 
@@ -90,7 +98,7 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
         tvReleaseDate = view.findViewById(R.id.details_tv_released_date);
         tvOverview = view.findViewById(R.id.details_tv_overview_text);
 
-        Button btnTrailer = view.findViewById(R.id.details_btn_trailer);
+        btnTrailer = view.findViewById(R.id.details_btn_trailer);
         btnTrailer.setOnClickListener(this);
 
         setMovie();
@@ -113,6 +121,7 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         if (movieModel == null) return;
 
+        setButtonLoadingStatus();
         moviesService.getVideos(movieModel.getMovieId())
                 .enqueue(new Callback<VideosListResult>() {
 
@@ -127,13 +136,34 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
                                 startActivity(browserIntent);
                             }
                         }
+                        resetButtonStatus();
                     }
 
                     @Override
                     public void onFailure(Call<VideosListResult> call, Throwable t) {
-
+                        Toast.makeText(getContext(), R.string.something_went_wrong_text, Toast.LENGTH_SHORT).show();
+                        resetButtonStatus();
                     }
                 });
 
+    }
+
+    private void setButtonLoadingStatus() {
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+        RotateDrawable rotateDrawable = (RotateDrawable) ContextCompat.getDrawable(context, R.drawable.progress_animation);
+        ObjectAnimator anim = ObjectAnimator.ofInt(rotateDrawable, "level", 0, 10000);
+        anim.setDuration(1000);
+        anim.setRepeatCount(ValueAnimator.INFINITE);
+        anim.start();
+        btnTrailer.setText(R.string.details_loading_trailer_text);
+        btnTrailer.setCompoundDrawablesWithIntrinsicBounds(rotateDrawable, null, null, null);
+    }
+
+    private void resetButtonStatus() {
+        btnTrailer.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+        btnTrailer.setText(R.string.details_trailer_text);
     }
 }
