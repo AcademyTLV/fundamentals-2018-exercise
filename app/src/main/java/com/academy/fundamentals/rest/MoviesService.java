@@ -1,7 +1,10 @@
 package com.academy.fundamentals.rest;
 
+import com.google.gson.JsonObject;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface MoviesService {
     
@@ -19,10 +22,18 @@ public interface MoviesService {
     String apiKey = "f453f49d458a7818caaec0a67158d0ee";
     String keyQuery= "?api_key=" + apiKey;
 
-    String QUERY_PATH = POPULAR + keyQuery;
+    String POPULAR_QUERY_PATH = POPULAR + keyQuery;
 
-    @GET(QUERY_PATH)
+    String MOVIE_ID_KEY = "movie_id";
+    String VIDEOS = "movie/{" + MOVIE_ID_KEY + "}/videos";
+
+    String VIDEOS_QUERY_PATH = VIDEOS + keyQuery;
+
+    @GET(POPULAR_QUERY_PATH)
     Call<MovieListResult> searchImage();
+
+    @GET(VIDEOS_QUERY_PATH)
+    Call<VideosListResult> getVideos(@Path(MOVIE_ID_KEY) int movieId);
 }
 
 

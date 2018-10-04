@@ -12,9 +12,9 @@ public class MovieModelConverter {
 
         ArrayList<MovieModel> result = new ArrayList<>();
         for (MovieResult movieResult : movieListResult.getResults()) {
-            result.add(new MovieModel(movieResult.getTitle(), MoviesService.POSTER_BASE_URL + movieResult.getPosterPath(),
+            result.add(new MovieModel(movieResult.getId(), movieResult.getTitle(), MoviesService.POSTER_BASE_URL + movieResult.getPosterPath(),
                     MoviesService.BACKDROP_BASE_URL + movieResult.getBackdropPath(), movieResult.getOverview(),
-                    movieResult.getReleaseDate(), movieResult.getPosterPath()));
+                    movieResult.getReleaseDate()));
         }
 
         return result;

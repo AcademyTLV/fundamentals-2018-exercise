@@ -9,31 +9,32 @@ import android.text.TextUtils;
  */
 public class MovieModel implements Parcelable {
 
+    private int movieId;
     private String name;
     private String imageUri;
     private String backImageUri;
     private String overview;
     private String releaseDate;
-    private String trailerUrl;
+//    private String trailerUrl;
 
     public MovieModel() {   }
 
     protected MovieModel(Parcel in) {
+        movieId = in.readInt();
         name = in.readString();
         imageUri = in.readString();
         backImageUri = in.readString();
         overview = in.readString();
         releaseDate = in.readString();
-        trailerUrl = in.readString();
     }
 
-    public MovieModel(String name, String imageUri, String backImageUri, String overview, String releaseDate, String trailerUrl) {
+    public MovieModel(int movieId, String name, String imageUri, String backImageUri, String overview, String releaseDate) {
+        this.movieId = movieId;
         this.name = name;
         this.imageUri = imageUri;
         this.backImageUri = backImageUri;
         this.overview = overview;
         this.releaseDate = releaseDate;
-        this.trailerUrl = trailerUrl;
     }
 
     public String getName() {
@@ -77,12 +78,16 @@ public class MovieModel implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
-    public String getTrailerUrl() {
-        return trailerUrl;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setTrailerUrl(String trailerUrl) {
-        this.trailerUrl = trailerUrl;
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
+    }
+
+    public void setBackImageUri(String backImageUri) {
+        this.backImageUri = backImageUri;
     }
 
     @Override
@@ -90,7 +95,6 @@ public class MovieModel implements Parcelable {
         return "MovieModel{" +
                 "name='" + name + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +
-                ", trailerUrl='" + trailerUrl + '\'' +
                 ", overview=" + (TextUtils.isEmpty(overview) ? "Empty" : overview.length()) +
                 ", imageRes=" + (imageUri == null ? "Nun" : "OK") +
                 ", backImageRes=" + (backImageUri == null ? "Nun" : "OK") +
@@ -116,11 +120,11 @@ public class MovieModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(movieId);
         parcel.writeString(name);
         parcel.writeString(imageUri);
         parcel.writeString(backImageUri);
         parcel.writeString(overview);
         parcel.writeString(releaseDate);
-        parcel.writeString(trailerUrl);
     }
 }

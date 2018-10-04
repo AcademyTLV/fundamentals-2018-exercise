@@ -17,7 +17,19 @@ import android.widget.TextView;
 
 import com.academy.fundamentals.R;
 import com.academy.fundamentals.model.MovieModel;
+import com.academy.fundamentals.rest.MoviesService;
+import com.academy.fundamentals.rest.VideoResult;
+import com.academy.fundamentals.rest.VideosListResult;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created By Yamin on 21-09-2018
@@ -33,6 +45,7 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     private TextView tvOverview;
     private MovieModel movieModel;
     private Picasso picasso;
+    private MoviesService moviesService;
 
     public MovieDetailsFragment() { }
 
@@ -53,6 +66,13 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
             movieModel = getArguments().getParcelable(ARG_MOVIE);
         }
         Log.d(TAG, "movieModel: "+movieModel);
+
+        Retrofit retrofit = new Retrofit.Builder().
+                baseUrl(MoviesService.BASE_API_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        moviesService = retrofit.create(MoviesService.class);
     }
 
 
@@ -92,10 +112,28 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (movieModel == null) return;
-        String trailerUrl = movieModel.getTrailerUrl();
-        if (TextUtils.isEmpty(trailerUrl)) return;
 
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(trailerUrl));
-        startActivity(browserIntent);
+        moviesService.getVideos(movieModel.getMovieId())
+                .enqueue(new Callback<VideosListResult>() {
+
+                    @Override
+                    public void onResponse(Call<VideosListResult> call, Response<VideosListResult> response) {
+                        VideosListResult body = response.body();
+                        if (body != null) {
+                            List<VideoResult> results = body.getResults();
+                            if (results != null && !results.isEmpty()) {
+                                String trailerUrl = MoviesService.YOUTUBE_BASE_URL + results.get(0).getKey();
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(trailerUrl));
+                                startActivity(browserIntent);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<VideosListResult> call, Throwable t) {
+
+                    }
+                });
+
     }
 }

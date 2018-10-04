@@ -22,7 +22,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MoviesActivity extends AppCompatActivity implements OnMovieClickListener {
 
-    private Retrofit retrofit;
     private MoviesService moviesService;
     private RecyclerView recyclerView;
 
@@ -40,7 +39,7 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
     }
 
     private void createNetworkService() {
-        retrofit = new Retrofit.Builder().
+        Retrofit retrofit = new Retrofit.Builder().
                 baseUrl(MoviesService.BASE_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
