@@ -41,7 +41,7 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
 
     private void createNetworkService() {
         retrofit = new Retrofit.Builder().
-                baseUrl(MoviesService.BASE_URL)
+                baseUrl(MoviesService.BASE_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

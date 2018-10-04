@@ -1,15 +1,17 @@
 package com.academy.fundamentals.rest;
 
-import com.google.gson.JsonObject;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 public interface MoviesService {
+    
+    String POSTER_BASE_URL = "https://image.tmdb.org/t/p/w342";
+    String BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/w780";
+    String YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v=";
 
+    String BASE_URL = "https://api.themoviedb.org";
     /* base search image url */
-    String BASE_URL = "https://api.themoviedb.org/3/";
+    String BASE_API_URL = BASE_URL + "/3/";
 
     String POPULAR = "movie/popular";
 

@@ -2,6 +2,7 @@ package com.academy.fundamentals.model;
 
 import com.academy.fundamentals.rest.MovieListResult;
 import com.academy.fundamentals.rest.MovieResult;
+import com.academy.fundamentals.rest.MoviesService;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,9 @@ public class MovieModelConverter {
 
         ArrayList<MovieModel> result = new ArrayList<>();
         for (MovieResult movieResult : movieListResult.getResults()) {
-            result.add(new MovieModel(movieResult.getTitle(), 0, 0, movieResult.getOverview(), movieResult.getReleaseDate(), movieResult.getPosterPath()));
+            result.add(new MovieModel(movieResult.getTitle(), MoviesService.POSTER_BASE_URL + movieResult.getPosterPath(),
+                    MoviesService.BACKDROP_BASE_URL + movieResult.getBackdropPath(), movieResult.getOverview(),
+                    movieResult.getReleaseDate(), movieResult.getPosterPath()));
         }
 
         return result;

@@ -2,7 +2,6 @@ package com.academy.fundamentals.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
 
 /**
@@ -11,10 +10,8 @@ import android.text.TextUtils;
 public class MovieModel implements Parcelable {
 
     private String name;
-    @DrawableRes
-    private int imageRes;
-    @DrawableRes
-    private int backImageRes;
+    private String imageUri;
+    private String backImageUri;
     private String overview;
     private String releaseDate;
     private String trailerUrl;
@@ -23,17 +20,17 @@ public class MovieModel implements Parcelable {
 
     protected MovieModel(Parcel in) {
         name = in.readString();
-        imageRes = in.readInt();
-        backImageRes = in.readInt();
+        imageUri = in.readString();
+        backImageUri = in.readString();
         overview = in.readString();
         releaseDate = in.readString();
         trailerUrl = in.readString();
     }
 
-    public MovieModel(String name, int imageRes, int backImageRes, String overview, String releaseDate, String trailerUrl) {
+    public MovieModel(String name, String imageUri, String backImageUri, String overview, String releaseDate, String trailerUrl) {
         this.name = name;
-        this.imageRes = imageRes;
-        this.backImageRes = backImageRes;
+        this.imageUri = imageUri;
+        this.backImageUri = backImageUri;
         this.overview = overview;
         this.releaseDate = releaseDate;
         this.trailerUrl = trailerUrl;
@@ -47,14 +44,10 @@ public class MovieModel implements Parcelable {
         this.name = name;
     }
 
-    @DrawableRes
-    public int getImageRes() {
-        return imageRes;
+    public String getImageRes() {
+        return imageUri;
     }
 
-    public void setImageRes(@DrawableRes int imageRes) {
-        this.imageRes = imageRes;
-    }
 
     public String getOverview() {
         return overview;
@@ -64,13 +57,16 @@ public class MovieModel implements Parcelable {
         this.overview = overview;
     }
 
-    @DrawableRes
-    public int getBackImageRes() {
-        return backImageRes;
+    public String getImageUri() {
+        return imageUri;
     }
 
-    public void setBackImageRes(@DrawableRes int backImageRes) {
-        this.backImageRes = backImageRes;
+    public String getBackImageUri() {
+        return backImageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
     public String getReleaseDate() {
@@ -96,8 +92,8 @@ public class MovieModel implements Parcelable {
                 ", releaseDate='" + releaseDate + '\'' +
                 ", trailerUrl='" + trailerUrl + '\'' +
                 ", overview=" + (TextUtils.isEmpty(overview) ? "Empty" : overview.length()) +
-                ", imageRes=" + (imageRes == 0 ? "Nun" : "OK") +
-                ", backImageRes=" + (backImageRes == 0 ? "Nun" : "OK") +
+                ", imageRes=" + (imageUri == null ? "Nun" : "OK") +
+                ", backImageRes=" + (backImageUri == null ? "Nun" : "OK") +
                 '}';
     }
 
@@ -121,8 +117,8 @@ public class MovieModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
-        parcel.writeInt(imageRes);
-        parcel.writeInt(backImageRes);
+        parcel.writeString(imageUri);
+        parcel.writeString(backImageUri);
         parcel.writeString(overview);
         parcel.writeString(releaseDate);
         parcel.writeString(trailerUrl);

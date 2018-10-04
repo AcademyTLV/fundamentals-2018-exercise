@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.academy.fundamentals.R;
 import com.academy.fundamentals.model.MovieModel;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created By Yamin on 21-09-2018
@@ -31,6 +32,7 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     private TextView tvReleaseDate;
     private TextView tvOverview;
     private MovieModel movieModel;
+    private Picasso picasso;
 
     public MovieDetailsFragment() { }
 
@@ -46,6 +48,7 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        picasso = Picasso.get();
         if (getArguments() != null) {
             movieModel = getArguments().getParcelable(ARG_MOVIE);
         }
@@ -76,8 +79,11 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     private void setMovie() {
         if (movieModel == null) return;
 
-        ivImage.setImageResource(movieModel.getImageRes());
-        ivBackImage.setImageResource(movieModel.getBackImageRes());
+        picasso.load(movieModel.getImageUri())
+                .into(ivImage);
+        picasso.load(movieModel.getBackImageUri())
+                .into(ivBackImage);
+
         tvTitle.setText(movieModel.getName());
         tvReleaseDate.setText(movieModel.getReleaseDate());
         tvOverview.setText(movieModel.getOverview());
