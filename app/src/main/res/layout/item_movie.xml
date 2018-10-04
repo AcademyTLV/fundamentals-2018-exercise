@@ -42,4 +42,5 @@
         app:layout_constraintStart_toStartOf="@id/item_movie_tv_title"
         app:layout_constraintTop_toBottomOf="@id/item_movie_tv_title"
         tools:text="content" />
+
 </android.support.constraint.ConstraintLayout>
