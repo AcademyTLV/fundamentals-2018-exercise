@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.academy.fundamentals.R;
 import com.academy.fundamentals.details.DetailsActivity;
@@ -24,12 +26,14 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
 
     private MoviesService moviesService;
     private RecyclerView recyclerView;
+    private View progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
         recyclerView = findViewById(R.id.movies_rv_list);
+        progressBar = findViewById(R.id.main_progress);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -58,11 +62,12 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
 
     private void loadMovies() {
         MoviesContent.clear();
-
+        progressBar.setVisibility(View.VISIBLE);
         moviesService.searchImage().enqueue(new Callback<MovieListResult>() {
             @Override
             public void onResponse(Call<MovieListResult> call, Response<MovieListResult> response) {
                 Log.i("response", "response");
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     MoviesContent.MOVIES.addAll(MovieModelConverter.convertResult(response.body()));
                     recyclerView.setAdapter(new MoviesViewAdapter(MoviesContent.MOVIES, MoviesActivity.this));
@@ -71,7 +76,9 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
 
             @Override
             public void onFailure(Call<MovieListResult> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 Log.i("failure", "failure");
+                Toast.makeText(MoviesActivity.this, R.string.something_went_wrong_text, Toast.LENGTH_SHORT).show();
 
             }
         });
