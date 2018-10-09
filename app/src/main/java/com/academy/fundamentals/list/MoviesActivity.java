@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.academy.fundamentals.BackgroundServices.BGServiceActivity;
 import com.academy.fundamentals.R;
 import com.academy.fundamentals.Threads.AsyncTaskActivity;
 import com.academy.fundamentals.Threads.ThreadsActivity;
@@ -56,6 +57,11 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
             case R.id.action_open_thread_handler:
                 // Open Thread Handler Activity
                 startActivity(new Intent(MoviesActivity.this, ThreadsActivity.class));
+                return true;
+
+            case R.id.action_open_background_service_activity:
+                // Open background service Activity
+                startActivity(new Intent(MoviesActivity.this, BGServiceActivity.class));
                 return true;
 
             default:
