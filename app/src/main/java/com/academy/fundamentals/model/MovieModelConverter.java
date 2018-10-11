@@ -1,7 +1,5 @@
 package com.academy.fundamentals.model;
 
-import com.academy.fundamentals.rest.MovieListResult;
-import com.academy.fundamentals.rest.MovieResult;
 import com.academy.fundamentals.rest.MoviesService;
 
 import java.util.ArrayList;

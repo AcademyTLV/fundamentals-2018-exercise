@@ -1,6 +1,7 @@
 package com.academy.fundamentals.rest;
 
-import com.google.gson.JsonObject;
+import com.academy.fundamentals.model.MovieListResult;
+import com.academy.fundamentals.model.VideosListResult;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RotateDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +22,9 @@ import android.widget.Toast;
 
 import com.academy.fundamentals.R;
 import com.academy.fundamentals.model.MovieModel;
+import com.academy.fundamentals.model.VideoResult;
+import com.academy.fundamentals.model.VideosListResult;
 import com.academy.fundamentals.rest.MoviesService;
-import com.academy.fundamentals.rest.VideoResult;
-import com.academy.fundamentals.rest.VideosListResult;
-import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

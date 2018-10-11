@@ -13,7 +13,7 @@ import com.academy.fundamentals.R;
 import com.academy.fundamentals.details.DetailsActivity;
 import com.academy.fundamentals.model.MovieModelConverter;
 import com.academy.fundamentals.model.MoviesContent;
-import com.academy.fundamentals.rest.MovieListResult;
+import com.academy.fundamentals.model.MovieListResult;
 import com.academy.fundamentals.rest.MoviesService;
 
 import retrofit2.Call;
