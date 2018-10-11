@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.academy.fundamentals.R;
+import com.academy.fundamentals.db.AppDatabase;
 import com.academy.fundamentals.model.MovieModel;
+import com.academy.fundamentals.model.VideoModel;
 import com.academy.fundamentals.model.VideoResult;
 import com.academy.fundamentals.model.VideosListResult;
 import com.academy.fundamentals.rest.MoviesService;
@@ -111,9 +114,21 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (movieModel == null) return;
+        FragmentActivity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+        final Context context = activity.getApplicationContext();
+        if (context == null) {
+            return;
+        }
 
+        final VideoModel videoModel = AppDatabase.getInstance(context).videoDao().getVideo(movieModel.getMovieId());
+        if (videoModel != null) {
+            playTrailer(videoModel.getKey());
+            return;
+        }
         setButtonLoadingStatus();
-
         MoviesService moviesService = RestClientManager.getMovieServiceInstance();
         moviesService.getVideos(movieModel.getMovieId())
                 .enqueue(new Callback<VideosListResult>() {
@@ -124,9 +139,10 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
                         if (body != null) {
                             List<VideoResult> results = body.getResults();
                             if (results != null && !results.isEmpty()) {
-                                String trailerUrl = MoviesService.YOUTUBE_BASE_URL + results.get(0).getKey();
-                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(trailerUrl));
-                                startActivity(browserIntent);
+                                VideoResult videoResult = results.get(0);
+                                AppDatabase.getInstance(context).videoDao().insert(new VideoModel(movieModel.getMovieId(), videoResult.getId(), videoResult.getKey()));
+                                String key = videoResult.getKey();
+                                playTrailer(key);
                             }
                         }
                         resetButtonStatus();
@@ -139,6 +155,12 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
                     }
                 });
 
+    }
+
+    private void playTrailer(String key) {
+        String trailerUrl = MoviesService.YOUTUBE_BASE_URL + key;
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(trailerUrl));
+        startActivity(browserIntent);
     }
 
     private void setButtonLoadingStatus() {

@@ -17,4 +17,8 @@ public class MovieModelConverter {
 
         return result;
     }
+
+    public static VideoModel convertVideoResult(VideoResult videoResult, int movieId) {
+        return new VideoModel(movieId, videoResult.getId(), videoResult.getKey());
+    }
 }
