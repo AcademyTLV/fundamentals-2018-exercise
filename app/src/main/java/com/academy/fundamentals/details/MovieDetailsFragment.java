@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.academy.fundamentals.R;
 import com.academy.fundamentals.db.AppDatabase;
 import com.academy.fundamentals.model.MovieModel;
+import com.academy.fundamentals.model.MovieModelConverter;
 import com.academy.fundamentals.model.VideoModel;
 import com.academy.fundamentals.model.VideoResult;
 import com.academy.fundamentals.model.VideosListResult;
@@ -139,10 +140,12 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
                         if (body != null) {
                             List<VideoResult> results = body.getResults();
                             if (results != null && !results.isEmpty()) {
-                                VideoResult videoResult = results.get(0);
-                                AppDatabase.getInstance(context).videoDao().insert(new VideoModel(movieModel.getMovieId(), videoResult.getId(), videoResult.getKey()));
-                                String key = videoResult.getKey();
-                                playTrailer(key);
+                                VideoModel convertedVideoModel = MovieModelConverter.convertVideoResult(body);
+                                if (convertedVideoModel != null) {
+                                    AppDatabase.getInstance(context).videoDao().insert(convertedVideoModel);
+                                    String key = convertedVideoModel.getKey();
+                                    playTrailer(key);
+                                }
                             }
                         }
                         resetButtonStatus();
