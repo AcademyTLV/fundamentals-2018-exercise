@@ -13,6 +13,7 @@ import com.academy.fundamentals.model.MovieModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoviesViewAdapter extends RecyclerView.Adapter<MoviesViewAdapter.ViewHolder> {
@@ -22,9 +23,15 @@ public class MoviesViewAdapter extends RecyclerView.Adapter<MoviesViewAdapter.Vi
     private Picasso picasso;
 
     public MoviesViewAdapter(List<MovieModel> items, OnMovieClickListener listener) {
-        movies = items;
+        movies = new ArrayList<>(items);
         movieClickListener = listener;
         picasso = Picasso.get();
+    }
+
+    public void setData(List<MovieModel> items) {
+        movies.clear();
+        movies.addAll(items);
+        notifyDataSetChanged();
     }
 
     @Override

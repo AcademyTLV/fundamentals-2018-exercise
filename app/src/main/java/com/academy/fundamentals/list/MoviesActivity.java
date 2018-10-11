@@ -11,12 +11,16 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.academy.fundamentals.R;
+import com.academy.fundamentals.db.AppDatabase;
 import com.academy.fundamentals.details.DetailsActivity;
+import com.academy.fundamentals.model.MovieModel;
 import com.academy.fundamentals.model.MovieModelConverter;
 import com.academy.fundamentals.model.MoviesContent;
 import com.academy.fundamentals.model.MovieListResult;
 import com.academy.fundamentals.rest.MoviesService;
 import com.academy.fundamentals.rest.RestClientManager;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,6 +32,7 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
 
     private RecyclerView recyclerView;
     private View progressBar;
+    private MoviesViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,11 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
 
     private void loadMovies() {
         MoviesContent.clear();
+        List<MovieModel> cachedMovies = AppDatabase.getInstance(this).movieDao().getAll();
+        MoviesContent.MOVIES.addAll(cachedMovies);
+        adapter = new MoviesViewAdapter(MoviesContent.MOVIES, MoviesActivity.this);
+        recyclerView.setAdapter(adapter);
+
         progressBar.setVisibility(View.VISIBLE);
         MoviesService moviesService = RestClientManager.getMovieServiceInstance();
         moviesService.searchImage().enqueue(new Callback<MovieListResult>() {
@@ -66,15 +76,17 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
                 Log.i("response", "response");
                 progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
+                    MoviesContent.clear();
                     MoviesContent.MOVIES.addAll(MovieModelConverter.convertResult(response.body()));
-                    recyclerView.setAdapter(new MoviesViewAdapter(MoviesContent.MOVIES, MoviesActivity.this));
+                    adapter.setData(MoviesContent.MOVIES);
+                    AppDatabase.getInstance(MoviesActivity.this).movieDao().deleteAll();
+                    AppDatabase.getInstance(MoviesActivity.this).movieDao().insertAll(MoviesContent.MOVIES);
                 }
             }
 
             @Override
             public void onFailure(Call<MovieListResult> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Log.i("failure", "failure");
                 Toast.makeText(MoviesActivity.this, R.string.something_went_wrong_text, Toast.LENGTH_SHORT).show();
 
             }

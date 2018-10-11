@@ -12,7 +12,7 @@ public class MovieModelConverter {
         for (MovieResult movieResult : movieListResult.getResults()) {
             result.add(new MovieModel(movieResult.getId(), movieResult.getTitle(), MoviesService.POSTER_BASE_URL + movieResult.getPosterPath(),
                     MoviesService.BACKDROP_BASE_URL + movieResult.getBackdropPath(), movieResult.getOverview(),
-                    movieResult.getReleaseDate()));
+                    movieResult.getReleaseDate(), movieResult.getPopularity()));
         }
 
         return result;

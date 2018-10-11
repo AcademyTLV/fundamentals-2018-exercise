@@ -1,5 +1,7 @@
 package com.academy.fundamentals.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -7,14 +9,17 @@ import android.text.TextUtils;
 /**
  * Created By Yamin on 20-09-2018
  */
+@Entity
 public class MovieModel implements Parcelable {
 
+    @PrimaryKey
     private int movieId;
     private String name;
     private String imageUri;
     private String backImageUri;
     private String overview;
     private String releaseDate;
+    private Double popularity;
 //    private String trailerUrl;
 
     public MovieModel() {   }
@@ -26,15 +31,17 @@ public class MovieModel implements Parcelable {
         backImageUri = in.readString();
         overview = in.readString();
         releaseDate = in.readString();
+        popularity = in.readDouble();
     }
 
-    public MovieModel(int movieId, String name, String imageUri, String backImageUri, String overview, String releaseDate) {
+    public MovieModel(int movieId, String name, String imageUri, String backImageUri, String overview, String releaseDate, Double popularity) {
         this.movieId = movieId;
         this.name = name;
         this.imageUri = imageUri;
         this.backImageUri = backImageUri;
         this.overview = overview;
         this.releaseDate = releaseDate;
+        this.popularity = popularity;
     }
 
     public String getName() {
@@ -90,6 +97,14 @@ public class MovieModel implements Parcelable {
         this.backImageUri = backImageUri;
     }
 
+    public Double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Double popularity) {
+        this.popularity = popularity;
+    }
+
     @Override
     public String toString() {
         return "MovieModel{" +
@@ -126,5 +141,6 @@ public class MovieModel implements Parcelable {
         parcel.writeString(backImageUri);
         parcel.writeString(overview);
         parcel.writeString(releaseDate);
+        parcel.writeDouble(popularity);
     }
 }
