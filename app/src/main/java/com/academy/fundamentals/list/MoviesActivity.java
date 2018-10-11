@@ -2,6 +2,7 @@ package com.academy.fundamentals.list;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.academy.fundamentals.model.MovieModelConverter;
 import com.academy.fundamentals.model.MoviesContent;
 import com.academy.fundamentals.model.MovieListResult;
 import com.academy.fundamentals.rest.MoviesService;
+import com.academy.fundamentals.rest.RestClientManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +26,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MoviesActivity extends AppCompatActivity implements OnMovieClickListener {
 
-    private MoviesService moviesService;
     private RecyclerView recyclerView;
     private View progressBar;
 
@@ -43,12 +44,7 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
     }
 
     private void createNetworkService() {
-        Retrofit retrofit = new Retrofit.Builder().
-                baseUrl(MoviesService.BASE_API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        moviesService = retrofit.create(MoviesService.class);
     }
 
     @Override
@@ -63,9 +59,10 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
     private void loadMovies() {
         MoviesContent.clear();
         progressBar.setVisibility(View.VISIBLE);
+        MoviesService moviesService = RestClientManager.getMovieServiceInstance();
         moviesService.searchImage().enqueue(new Callback<MovieListResult>() {
             @Override
-            public void onResponse(Call<MovieListResult> call, Response<MovieListResult> response) {
+            public void onResponse(@NonNull Call<MovieListResult> call, @NonNull Response<MovieListResult> response) {
                 Log.i("response", "response");
                 progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {

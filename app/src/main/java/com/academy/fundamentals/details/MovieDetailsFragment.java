@@ -25,6 +25,7 @@ import com.academy.fundamentals.model.MovieModel;
 import com.academy.fundamentals.model.VideoResult;
 import com.academy.fundamentals.model.VideosListResult;
 import com.academy.fundamentals.rest.MoviesService;
+import com.academy.fundamentals.rest.RestClientManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -49,7 +50,6 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     private TextView tvOverview;
     private MovieModel movieModel;
     private Picasso picasso;
-    private MoviesService moviesService;
     private Button btnTrailer;
 
     public MovieDetailsFragment() { }
@@ -72,12 +72,6 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
         }
         Log.d(TAG, "movieModel: "+movieModel);
 
-        Retrofit retrofit = new Retrofit.Builder().
-                baseUrl(MoviesService.BASE_API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        moviesService = retrofit.create(MoviesService.class);
     }
 
 
@@ -119,6 +113,8 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
         if (movieModel == null) return;
 
         setButtonLoadingStatus();
+
+        MoviesService moviesService = RestClientManager.getMovieServiceInstance();
         moviesService.getVideos(movieModel.getMovieId())
                 .enqueue(new Callback<VideosListResult>() {
 
