@@ -53,4 +53,13 @@ public class MovieListResult {
         this.results = results;
     }
 
+    @Override
+    public String toString() {
+        return "MovieListResult{" +
+                "page=" + page +
+                ", totalResults=" + totalResults +
+                ", totalPages=" + totalPages +
+                ", results=" + results +
+                '}';
+    }
 }

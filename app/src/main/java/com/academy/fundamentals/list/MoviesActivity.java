@@ -38,13 +38,7 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        createNetworkService();
-
         loadMovies();
-    }
-
-    private void createNetworkService() {
-
     }
 
     @Override
@@ -63,9 +57,9 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
         moviesService.searchImage().enqueue(new Callback<MovieListResult>() {
             @Override
             public void onResponse(@NonNull Call<MovieListResult> call, @NonNull Response<MovieListResult> response) {
-                Log.i("response", "response");
                 progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
+                    Log.d("TAG", "MoviesActivity # loadMovies, response");
                     MoviesContent.MOVIES.addAll(MovieModelConverter.convertResult(response.body()));
                     recyclerView.setAdapter(new MoviesViewAdapter(MoviesContent.MOVIES, MoviesActivity.this));
                 }
@@ -74,9 +68,8 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
             @Override
             public void onFailure(Call<MovieListResult> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Log.i("failure", "failure");
+                Log.d("TAG", "MoviesActivity # loadMovies, failure");
                 Toast.makeText(MoviesActivity.this, R.string.something_went_wrong_text, Toast.LENGTH_SHORT).show();
-
             }
         });
     }
