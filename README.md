@@ -1,3 +1,3 @@
-# fundamentals 2018 exercise 7
-Networking
-https://docs.google.com/presentation/d/1I9pf0qd_3VKx4nW3mWOj27mm2ObdQm4WCuinYkSmYLM/edit?usp=sharing
+# fundamentals 2018 exercise 9
+Leftovers
+https://docs.google.com/presentation/d/1wV43Sh2tgjpcLk0tMa-RI-Hq8XME6Qvz5mvhfOzNhv4/edit?usp=sharing
