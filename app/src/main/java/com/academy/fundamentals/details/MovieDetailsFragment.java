@@ -1,5 +1,6 @@
 package com.academy.fundamentals.details;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -16,11 +17,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.academy.fundamentals.R;
+import com.academy.fundamentals.download.DownloadActivity;
 import com.academy.fundamentals.model.MovieModel;
 import com.academy.fundamentals.model.VideoResult;
 import com.academy.fundamentals.model.VideosListResult;
@@ -51,6 +54,7 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     private MovieModel movieModel;
     private Picasso picasso;
     private Button btnTrailer;
+    private ImageButton btnDownloadImage;
 
     public MovieDetailsFragment() { }
 
@@ -62,7 +66,6 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +76,6 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
         Log.d(TAG, "movieModel: "+movieModel);
 
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,6 +90,9 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
         tvTitle = view.findViewById(R.id.details_tv_title);
         tvReleaseDate = view.findViewById(R.id.details_tv_released_date);
         tvOverview = view.findViewById(R.id.details_tv_overview_text);
+
+        btnDownloadImage = view.findViewById(R.id.details_ib_download);
+        btnDownloadImage.setOnClickListener(this);
 
         btnTrailer = view.findViewById(R.id.details_btn_trailer);
         btnTrailer.setOnClickListener(this);
@@ -112,8 +117,19 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         if (movieModel == null) return;
 
-        setButtonLoadingStatus();
+        switch (view.getId()) {
+            case R.id.details_btn_trailer:
+                setButtonLoadingStatus();
+                getMovieVideos();
+                break;
 
+            case R.id.details_ib_download:
+                downloadImage();
+                break;
+        }
+    }
+
+    private void getMovieVideos() {
         MoviesService moviesService = RestClientManager.getMovieServiceInstance();
         moviesService.getVideos(movieModel.getMovieId())
                 .enqueue(new Callback<VideosListResult>() {
@@ -138,7 +154,6 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
                         resetButtonStatus();
                     }
                 });
-
     }
 
     private void setButtonLoadingStatus() {
@@ -159,4 +174,12 @@ public class MovieDetailsFragment extends Fragment implements View.OnClickListen
         btnTrailer.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
         btnTrailer.setText(R.string.details_trailer_text);
     }
+
+    private void downloadImage() {
+        Context context = getContext();
+        if (movieModel == null || context == null) return;
+
+        DownloadActivity.startActivity(context, movieModel);
+    }
+
 }

@@ -2,7 +2,7 @@
     <string name="app_name">Android Academy</string>
     <string name="title">Android Academy Fundamentals Course 2018</string>
     <string name="infinity_war_title">Avengers: Infinity War</string>
-    <string name="infinity_war_release_date">2018-04-25</string>
+    <string name="infinity_war_release_date">2018–04–25</string>
     <string name="infinity_war_overview">As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led up to this moment - the fate of Earth and existence itself has never been more uncertain.</string>
     <string name="infinity_war_trailer">https://www.youtube.com/watch?v=6ZfuNTqbHE8</string>
     <string name="title_activity_main">MainActivity</string>
@@ -16,5 +16,16 @@
 
 
     <string name="something_went_wrong_text">Something went wrong :-/</string>
+
+    <string name="download_dialog_title">Permission needed</string>
+    <string name="download_dialog_message">To be able downloading requested file the app need to be granted to access your files</string>
+    <string name="download_dialog_ok">OK</string>
+    <string name="download_dialog_cancel">Cancel</string>
+    <string name="download_image_description">Main image</string>
+
+    <string name="notification_title">Downloading…</string>
+    <string name="notification_message">%1$d %%</string>
+    <string name="channel_name">Default channel</string>
+    <string name="channel_description">It is a channel for default notifications</string>
 
 </resources>
