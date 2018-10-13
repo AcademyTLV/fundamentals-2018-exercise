@@ -34,10 +34,6 @@ public class DownloadActivity extends AppCompatActivity {
     public static void startActivity(Context context, MovieModel movieModel) {
         Intent intent = new Intent(context, DownloadActivity.class);
         intent.putExtra(ARG_MOVIE_MODEL, movieModel);
-        startActivity(context, intent);
-    }
-
-    private static void startActivity(Context context, Intent intent) {
         context.startActivity(intent);
     }
 
@@ -74,6 +70,7 @@ public class DownloadActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        // unregister local broadcast
         LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
         super.onStop();
     }
@@ -110,14 +107,16 @@ public class DownloadActivity extends AppCompatActivity {
             } else {
                 // permission denied, boo! Disable the functionality that depends on this permission.
                 Log.d("TAG", "DownloadActivity # onRequestPermissionsResult, Permission denied");
+                // no Permission - finish activity
+                finishActivity();
             }
         }
     }
 
     private void requestWritePermission() {
-        ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, PERMISSIONS_REQUEST_CODE);
         // PERMISSIONS_REQUEST_CODE is an app-defined int constant.
         // The callback method gets the result of the request.
+        ActivityCompat.requestPermissions(this, new String[]{PERMISSION}, PERMISSIONS_REQUEST_CODE);
     }
 
     private void showExplainingRationaleDialog() {
@@ -134,10 +133,14 @@ public class DownloadActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 // no Permission - finish activity
-                DownloadActivity.this.finish();
+                finishActivity();
             }
         });
         builder.create().show();
+    }
+
+    private void finishActivity() {
+        this.finish();
     }
 
     private void startDownloadService() {

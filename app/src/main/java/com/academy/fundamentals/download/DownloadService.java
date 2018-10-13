@@ -94,9 +94,9 @@ public class DownloadService extends Service {
     }
 
     private void updateNotification(int progress) {
-        Notification notification = createNotification(progress);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
+            Notification notification = createNotification(progress);
             notificationManager.notify(ONGOING_NOTIFICATION_ID, notification);
         }
     }
