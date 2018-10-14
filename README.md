@@ -1,3 +1,3 @@
-# fundamentals 2018 exercise 7
-Networking
-https://docs.google.com/presentation/d/1I9pf0qd_3VKx4nW3mWOj27mm2ObdQm4WCuinYkSmYLM/edit?usp=sharing
+# fundamentals 2018 exercise 8
+Persistency
+https://docs.google.com/presentation/d/1if7OtIZyd9Zx2P8LtX0hBYONNKBrqNb2BkJSmQwzW6w/edit?usp=sharing
