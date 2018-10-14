@@ -51,6 +51,11 @@ public class MoviesViewAdapter extends RecyclerView.Adapter<MoviesViewAdapter.Vi
         return movies.size();
     }
 
+    public void clearData() {
+        movies.clear();
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final ImageView ivImage;
