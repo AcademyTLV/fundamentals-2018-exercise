@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.academy.fundamentals.R;
 
 
-public class ThreadsActivityFragment extends Fragment implements View.OnClickListener{
+public class CounterFragment extends Fragment implements View.OnClickListener{
 
     public final static String FRAGMENT_TYPE = "fragment_type";
     private Button mBtnCreate;
@@ -23,7 +23,7 @@ public class ThreadsActivityFragment extends Fragment implements View.OnClickLis
 
     private IAsyncTaskEvents callbackListener;
 
-    public ThreadsActivityFragment() {
+    public CounterFragment() {
     }
 
     @Override
