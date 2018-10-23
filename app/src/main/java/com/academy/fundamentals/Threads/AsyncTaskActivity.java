@@ -10,7 +10,7 @@ import com.academy.fundamentals.R;
 public class AsyncTaskActivity extends AppCompatActivity implements IAsyncTaskEvents {
 
     private static FragmentManager mFragmentManager;
-    private ThreadsActivityFragment mThreadsFragment;
+    private CounterFragment mThreadsFragment;
     private CounterAsyncTask mAsyncTask;
 
     @Override
@@ -20,9 +20,9 @@ public class AsyncTaskActivity extends AppCompatActivity implements IAsyncTaskEv
 
         mFragmentManager = getSupportFragmentManager();//Get Fragment Manager
         if (mThreadsFragment == null) {
-            mThreadsFragment = new ThreadsActivityFragment();//Get Fragment Instance
+            mThreadsFragment = new CounterFragment();//Get Fragment Instance
             Bundle data = new Bundle();//Use bundle to pass data
-            data.putString(ThreadsActivityFragment.FRAGMENT_TYPE, getString(R.string.async_task_activity));//put string, int, etc in bundle with a key value
+            data.putString(CounterFragment.FRAGMENT_TYPE, getString(R.string.async_task_activity));//put string, int, etc in bundle with a key value
             mThreadsFragment.setArguments(data);//Finally set argument bundle to fragment
             mFragmentManager.beginTransaction().replace(R.id.fragment, mThreadsFragment).commit();//now replace the argument fragment
         }
