@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
@@ -61,9 +60,7 @@
                     android:text="@string/details_release_text"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@id/details_iv_image"
-                    app:layout_constraintTop_toBottomOf="@id/details_tv_title" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/details_tv_released_date"
@@ -75,8 +72,6 @@
                     android:text="@string/infinity_war_release_date"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    app:layout_constraintStart_toEndOf="@id/details_tv_released"
-                    app:layout_constraintTop_toBottomOf="@id/details_tv_title"
                     tools:text="2018-01-01" />
             </LinearLayout>
 
@@ -86,9 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/details_trailer_text"
-                app:layout_constraintStart_toEndOf="@id/details_iv_image"
-                app:layout_constraintTop_toBottomOf="@id/details_tv_released" />
+                android:text="@string/details_trailer_text" />
         </LinearLayout>
 
         <TextView
