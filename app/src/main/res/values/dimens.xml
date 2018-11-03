@@ -9,4 +9,6 @@
     <dimen name="spacing_l">12dp</dimen>
     <dimen name="spacing_xl">16dp</dimen>
 
+    <dimen name="li_movie_height">108dp</dimen>
+
 </resources>
