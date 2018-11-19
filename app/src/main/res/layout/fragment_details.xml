@@ -61,9 +61,7 @@
                     android:text="@string/details_release_text"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@id/details_iv_image"
-                    app:layout_constraintTop_toBottomOf="@id/details_tv_title" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/details_tv_released_date"
@@ -75,8 +73,6 @@
                     android:text="@string/infinity_war_release_date"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    app:layout_constraintStart_toEndOf="@id/details_tv_released"
-                    app:layout_constraintTop_toBottomOf="@id/details_tv_title"
                     tools:text="2018-01-01" />
             </LinearLayout>
 
