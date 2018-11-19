@@ -1,5 +1,6 @@
 package com.academy.fundamentals.list;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +17,20 @@ public class MoviesViewAdapter extends RecyclerView.Adapter<MoviesViewAdapter.Vi
 
     private final List<MovieModel> movies;
     private OnMovieClickListener movieClickListener;
+    private LayoutInflater mLayoutInflater;
 
-    public MoviesViewAdapter(List<MovieModel> items, OnMovieClickListener listener) {
+    public MoviesViewAdapter(List<MovieModel> items,
+                             OnMovieClickListener listener,
+                             Context context) {
         movies = items;
         movieClickListener = listener;
+        mLayoutInflater = (LayoutInflater)context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_movie, parent, false);
+        View view = mLayoutInflater.inflate(R.layout.item_movie, parent, false);
         return new ViewHolder(view);
     }
 
