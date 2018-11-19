@@ -27,7 +27,7 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
 
         loadMovies();
 
-        recyclerView.setAdapter(new MoviesViewAdapter(movies, this));
+        recyclerView.setAdapter(new MoviesViewAdapter(movies, this, this));
     }
 
     @Override
