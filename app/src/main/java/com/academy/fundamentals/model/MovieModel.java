@@ -20,7 +20,6 @@ public class MovieModel implements Parcelable {
     private String overview;
     private String releaseDate;
     private Double popularity;
-//    private String trailerUrl;
 
     public MovieModel() {   }
 

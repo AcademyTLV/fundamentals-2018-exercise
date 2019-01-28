@@ -31,7 +31,7 @@ public interface MoviesService {
     String VIDEOS_QUERY_PATH = VIDEOS + keyQuery;
 
     @GET(POPULAR_QUERY_PATH)
-    Call<MovieListResult> searchImage();
+    Call<MovieListResult> searchMovies();
 
     @GET(VIDEOS_QUERY_PATH)
     Call<VideosListResult> getVideos(@Path(MOVIE_ID_KEY) int movieId);

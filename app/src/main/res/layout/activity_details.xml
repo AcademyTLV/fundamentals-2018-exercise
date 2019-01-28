@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".details.DetailsActivity">
+    tools:context=".details.viewpager.DetailsActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/details_vp_container"
