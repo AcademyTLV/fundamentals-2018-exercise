@@ -1,4 +1,3 @@
 # fundamentals 2018 exercise 2
 Views
-
-https://docs.google.com/presentation/d/1uMaI3Xs3XXKsZMSPvK82bwrirbW-zVgrjojvMAyTRV4/edit?usp=sharing
+https://docs.google.com/presentation/d/1oLMS6okalqdsI5Kosixg5IPG0N1Dt_v0efw8B74FvNs/edit?usp=sharing
